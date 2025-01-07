@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Admin Dashboard</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and Layout */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #f4f6f9;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding-top: 20px;
+            position: fixed;
+            height: 100%;
+        }
+
+        .sidebar .logo {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ecf0f1;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        .sidebar ul li:hover, .sidebar ul li a.active {
+            background-color: #34495e;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #ecf0f1;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .search-bar input {
+            padding: 8px;
+            width: 200px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-profile button {
+            margin-left: 10px;
+            padding: 5px 15px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Reports Content */
+        .reports-content {
+            margin-top: 30px;
+        }
+
+        .reports-content h2 {
+            margin-bottom: 20px;
+            color: #34495e;
+        }
+
+        .report-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .report-section h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .report-section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .report-section table th, .report-section table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .report-section table th {
+            background-color: #f4f4f4;
+        }
+
+        .filter-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .filter-controls select,
+        .filter-controls input {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .filter-controls button {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .filter-controls button:hover {
+            background-color: #2980b9;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">Admin Dashboard</div>
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li><a href="customers.html">Customers</a></li>
+            <li><a href="product.html">Products</a></li>
+            <li><a href="settings.html">Sales & Marketing</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        
+        <!-- Header -->
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="user-profile">
+                <span>Admin</span> | <button><a href="logout.php">Logout</a></button>
+            </div>
+        </header>
+
+        <!-- Reports Content -->
+        <section class="reports-content">
+
+            <h2>Reports</h2>
+
+            <!-- Sales Report Section -->
+            <div class="report-section">
+                <h3>Sales Report</h3>
+                <div class="filter-controls">
+                    <select>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="year">This Year</option>
+                    </select>
+                    <input type="text" placeholder="Search by product">
+                    <button>Generate Report</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Product</th>
+                            <th>Amount</th>
+                            <th>Sales Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#11234</td>
+                            <td>Product A</td>
+                            <td>$150.00</td>
+                            <td>2025-01-05</td>
+                        </tr>
+                        <tr>
+                            <td>#11235</td>
+                            <td>Product B</td>
+                            <td>$120.00</td>
+                            <td>2025-01-06</td>
+                        </tr>
+                        <tr>
+                            <td>#11236</td>
+                            <td>Product C</td>
+                            <td>$90.00</td>
+                            <td>2025-01-06</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Product Report Section -->
+            <div class="report-section">
+                <h3>Product Report</h3>
+                <div class="filter-controls">
+                    <select>
+                        <option value="top-selling">Top Selling</option>
+                        <option value="low-stock">Low Stock</option>
+                    </select>
+                    <input type="text" placeholder="Search by product">
+                    <button>Generate Report</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Stock</th>
+                            <th>Price</th>
+                            <th>Total Sales</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Product A</td>
+                            <td>50</td>
+                            <td>$30.00</td>
+                            <td>$1500.00</td>
+                        </tr>
+                        <tr>
+                            <td>Product B</td>
+                            <td>30</td>
+                            <td>$40.00</td>
+                            <td>$1200.00</td>
+                        </tr>
+                        <tr>
+                            <td>Product C</td>
+                            <td>20</td>
+                            <td>$45.00</td>
+                            <td>$900.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Customer Report Section -->
+            <div class="report-section">
+                <h3>Customer Report</h3>
+                <div class="filter-controls">
+                    <select>
+                        <option value="new-customers">New Customers</option>
+                        <option value="repeat-customers">Repeat Customers</option>
+                    </select>
+                    <input type="text" placeholder="Search by customer name">
+                    <button>Generate Report</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Total Spend</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Doe</td>
+                            <td>johndoe@example.com</td>
+                            <td>+1 123 456 789</td>
+                            <td>$500.00</td>
+                        </tr>
+                        <tr>
+                            <td>Jane Smith</td>
+                            <td>janesmith@example.com</td>
+                            <td>+1 987 654 321</td>
+                            <td>$700.00</td>
+                        </tr>
+                        <tr>
+                            <td>Mark Taylor</td>
+                            <td>marktaylor@example.com</td>
+                            <td>+1 555 123 456</td>
+                            <td>$300.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+    </div>
+
+</body>
+</html>

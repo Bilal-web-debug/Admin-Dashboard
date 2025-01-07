@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders - Admin Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and Layout */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #f4f6f9;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding-top: 20px;
+            position: fixed;
+            height: 100%;
+        }
+
+        .sidebar .logo {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ecf0f1;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        .sidebar ul li:hover, .sidebar ul li a.active {
+            background-color: #34495e;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #ecf0f1;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .search-bar input {
+            padding: 8px;
+            width: 200px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-profile button {
+            margin-left: 10px;
+            padding: 5px 15px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Orders Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #34495e;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .actions button {
+            padding: 5px 10px;
+            margin: 0 5px;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .actions button.cancel {
+            background-color: #e74c3c;
+        }
+
+        .actions button.view {
+            background-color: #2ecc71;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .filter-section select, .filter-section input {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .filter-section label {
+            margin-right: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .filter-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .filter-section select, .filter-section input {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">Admin Dashboard</div>
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="orders.html" class="active">Orders</a></li>
+            <li><a href="product.html">Products</a></li>
+            <li><a href="customers.html">Customers</a></li>
+            <li><a href="sm.html">Sales & Marketing</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        
+        <!-- Header -->
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search Orders...">
+            </div>
+            <div class="user-profile">
+                <span>Admin</span> | <button><a href="logout.php">Logout</a></button>
+            </div>
+        </header>
+
+        <!-- Orders Content -->
+        <section class="orders">
+            
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div>
+                    <label for="order-status">Order Status:</label>
+                    <select id="order-status">
+                        <option value="all">All</option>
+                        <option value="pending">Pending</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="date-filter">Filter by Date:</label>
+                    <input type="date" id="date-filter">
+                </div>
+            </div>
+
+            <!-- Orders Table -->
+            <h2>Order List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="order-table-body">
+                    <tr>
+                        <td>#12345</td>
+                        <td>John Doe</td>
+                        <td>2025-01-07</td>
+                        <td>Shipped</td>
+                        <td>$200</td>
+                        <td class="actions">
+                            <button class="view">View</button>
+                            <button class="cancel">Cancel</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#12346</td>
+                        <td>Jane Smith</td>
+                        <td>2025-01-06</td>
+                        <td>Pending</td>
+                        <td>$350</td>
+                        <td class="actions">
+                            <button class="view">View</button>
+                            <button class="cancel">Cancel</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script>
+        // Handle filter logic (Order Status and Date)
+        const orderStatus = document.getElementById('order-status');
+        const dateFilter = document.getElementById('date-filter');
+        const orderTableBody = document.getElementById('order-table-body');
+
+        // Sample data
+        const orders = [
+            { orderId: '#12345', customer: 'John Doe', date: '2025-01-07', status: 'Shipped', total: 200 },
+            { orderId: '#12346', customer: 'Jane Smith', date: '2025-01-06', status: 'Pending', total: 350 },
+            { orderId: '#12347', customer: 'Alice Johnson', date: '2025-01-05', status: 'Delivered', total: 400 },
+            { orderId: '#12348', customer: 'Bob Brown', date: '2025-01-04', status: 'Cancelled', total: 150 }
+        ];
+
+        // Function to filter orders
+        function filterOrders() {
+            const filteredOrders = orders.filter(order => {
+                let statusMatch = orderStatus.value === 'all' || order.status.toLowerCase() === orderStatus.value.toLowerCase();
+                let dateMatch = !dateFilter.value || order.date === dateFilter.value;
+
+                return statusMatch && dateMatch;
+            });
+
+            // Render filtered orders
+            renderOrders(filteredOrders);
+        }
+
+        // Function to render orders in the table
+        function renderOrders(filteredOrders) {
+            orderTableBody.innerHTML = '';
+
+            filteredOrders.forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.orderId}</td>
+                    <td>${order.customer}</td>
+                    <td>${order.date}</td>
+                    <td>${order.status}</td>
+                    <td>$${order.total}</td>
+                    <td class="actions">
+                        <button class="view">View</button>
+                        <button class="cancel">Cancel</button>
+                    </td>
+                `;
+                orderTableBody.appendChild(row);
+            });
+        }
+
+        // Event listeners for filters
+        orderStatus.addEventListener('change', filterOrders);
+        dateFilter.addEventListener('change', filterOrders);
+
+        // Initial rendering of all orders
+        renderOrders(orders);
+    </script>
+
+</body>
+</html>
